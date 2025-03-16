@@ -5,10 +5,9 @@
 
 <PageTitle>Home</PageTitle>
 
-<h3>Counter</h3>
-<p>Value: @CounterService.Counter</p>
-
 <Actions StartPressed="@StartIncrementing" />
+
+<Users UserCount="@CounterService.Counter" />
 
 @code {
     protected override void OnInitialized()

@@ -5,9 +5,15 @@
 
 <PageTitle>Home</PageTitle>
 
-<Actions StartPressed="@StartIncrementing" />
+<div class="parent-container">
+    <div class="control-panel">
+        <Users UserCount="@CounterService.Counter" />
+        <Actions StartPressed="@StartIncrementing" />
+    </div>
+    <div class="servers-panel">
 
-<Users UserCount="@CounterService.Counter" />
+    </div>
+</div>
 
 @code {
     protected override void OnInitialized()

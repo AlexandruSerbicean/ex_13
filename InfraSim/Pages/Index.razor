@@ -1,20 +1,14 @@
 ﻿@page "/"
 @using InfraSim.Services
-@inject UserCounter CounterService
 @using InfraSim.Pages
-
+@inject UserCounter CounterService
 
 <PageTitle>Home</PageTitle>
 
 <h3>Counter</h3>
 <p>Value: @CounterService.Counter</p>
-<button @onclick="StartIncrementing">Increment</button>
 
-<h1>Hello, world!</h1>
-Welcome to your new app.
-
-
-<Actions />
+<Actions StartPressed="@StartIncrementing" />
 
 @code {
     protected override void OnInitialized()
@@ -34,6 +28,6 @@ Welcome to your new app.
 
     public void Dispose()
     {
-        CounterService.OnCounterChanged -= UpdateCounter; // Avoid memory leaks
+        CounterService.OnCounterChanged -= UpdateCounter;
     }
 }

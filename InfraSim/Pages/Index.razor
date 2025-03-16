@@ -1,6 +1,8 @@
 ﻿@page "/"
 @using InfraSim.Services
 @inject UserCounter CounterService
+@using InfraSim.Pages
+
 
 <PageTitle>Home</PageTitle>
 
@@ -10,6 +12,9 @@
 
 <h1>Hello, world!</h1>
 Welcome to your new app.
+
+
+<Actions />
 
 @code {
     protected override void OnInitialized()

@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+
+
 namespace InfraSim
 {
     public class Program
@@ -22,5 +24,6 @@ namespace InfraSim
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+                
     }
 }

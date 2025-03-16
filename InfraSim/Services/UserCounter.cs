@@ -11,12 +11,15 @@ namespace InfraSim.Services
 
         public async Task StartIncrementing()
         {
-            while (Counter < 100)
+            while (Counter < 200000)
             {
-                Counter++;
+                Counter += 1000; 
                 OnCounterChanged?.Invoke();
-                await Task.Delay(100);
+                await Task.Delay(10); 
             }
+            
+            Counter = 200000; 
+            OnCounterChanged?.Invoke();
         }
     }
 }

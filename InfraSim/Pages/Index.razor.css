@@ -15,9 +15,6 @@
 
 .servers-panel {
     width: 65%;
-    background-color: #f3f3f3; 
-    min-height: 300px; 
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-wrap: wrap;
 }

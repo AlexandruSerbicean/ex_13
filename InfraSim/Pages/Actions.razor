@@ -1,6 +1,14 @@
+<div class="div-container">
+    <button class="round-button green-button" @onclick="OnStartClicked">Start</button>
+    <button class="round-button grey-button" @onclick="OnAddServerClicked">Add Server</button>
+</div>
+
 @code {
     [Parameter]
     public EventCallback StartPressed { get; set; }
+
+    [Parameter]
+    public EventCallback AddServer { get; set; }
 
     private async Task OnStartClicked()
     {
@@ -9,8 +17,12 @@
             await StartPressed.InvokeAsync();
         }
     }
-}
 
-<div class="div-container">
-    <button class="round-button green-button" @onclick="OnStartClicked">Start</button>
-</div>
+    private async Task OnAddServerClicked()
+    {
+        if (AddServer.HasDelegate)
+        {
+            await AddServer.InvokeAsync();
+        }
+    }
+}

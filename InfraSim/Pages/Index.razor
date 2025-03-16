@@ -7,17 +7,24 @@
 
 <div class="parent-container">
     <div class="control-panel">
-        <Users UserCount="@CounterService.Counter" />
-        <Actions StartPressed="@StartIncrementing" />
+        <Actions StartPressed="@StartIncrementing" AddServer="@AddServer" />
+        <Users UserCount="@CounterService.Counter"/>
     </div>
+    
     <div class="servers-panel">
-
+        @for (int i = 0; i < ServerCount; i++)
+        {
+            <Server />
+        }
     </div>
 </div>
 
 @code {
+    private int ServerCount = 0;
+
     protected override void OnInitialized()
     {
+        CounterService.ResetCounter(); // Resetăm counter-ul la fiecare reîncărcare
         CounterService.OnCounterChanged += UpdateCounter;
     }
 
@@ -29,6 +36,11 @@
     private async Task StartIncrementing()
     {
         await CounterService.StartIncrementing();
+    }
+
+    private void AddServer()
+    {
+        ServerCount++;
     }
 
     public void Dispose()

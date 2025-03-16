@@ -12,11 +12,13 @@ Welcome to your new app.
 @code {
     private int counter = 1;
 
-    private void StartIncrementing()
+    protected async Task StartIncrementing()
     {
-        if (counter < 100)
+        while (counter < 100)
         {
             counter++;
+            StateHasChanged(); 
+            await Task.Delay(100); 
         }
     }
 }

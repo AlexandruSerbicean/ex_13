@@ -22,7 +22,7 @@ public class TrafficRouting : ITrafficRouting
         return requestsCount; // Returns the total number of incoming requests
     }
 
-    private List<IServer> ObtainServers()
+    public List<IServer> ObtainServers()
     {
         return _servers; // Returns the list of available servers
     }

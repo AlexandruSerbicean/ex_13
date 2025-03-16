@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class TrafficRouting : ITrafficRouting
 {
-    private List<IServer> _servers;
+    public List<IServer> _servers;
 
     public TrafficRouting(List<IServer> servers)
     {
@@ -17,7 +17,7 @@ public class TrafficRouting : ITrafficRouting
         SendRequestsToServers(requests, servers);
     }
 
-    private int CalculateRequests(int requestsCount)
+    public int CalculateRequests(int requestsCount)
     {
         return requestsCount; // Returns the total number of incoming requests
     }
@@ -27,7 +27,7 @@ public class TrafficRouting : ITrafficRouting
         return _servers; // Returns the list of available servers
     }
 
-    private void SendRequestsToServers(int requests, List<IServer> servers)
+    public void SendRequestsToServers(int requests, List<IServer> servers)
     {
         if (servers.Count == 0)
         {

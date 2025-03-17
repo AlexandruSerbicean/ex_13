@@ -1,48 +1,19 @@
-using System;
 using System.Collections.Generic;
-using InfraSim.Pages.Models;
 
-public abstract class TrafficRouting : ITrafficRouting
+namespace InfraSim.Pages.Models
 {
-    public List<IServer> _servers;
-
-    public TrafficRouting(List<IServer> servers)
+    public abstract class TrafficRouting
     {
-        _servers = servers;
-    }
+        protected List<IServer> _servers;
 
-    public void RouteTraffic(int requestsCount)
-    {
-        int requests = CalculateRequests(requestsCount);
-        List<IServer> servers = ObtainServers();
-        SendRequestsToServers(requests, servers);
-    }
-
-    public int CalculateRequests(int requestsCount)
-    {
-        return requestsCount; // Returns the total number of incoming requests
-    }
-
-    public List<IServer> ObtainServers()
-    {
-        return _servers; // Returns the list of available servers
-    }
-
-    public void SendRequestsToServers(int requests, List<IServer> servers)
-    {
-        if (servers.Count == 0)
+        public TrafficRouting(List<IServer> servers)
         {
-            Console.WriteLine("No servers available to handle traffic.");
-            return;
+            _servers = servers;
         }
 
-        int requestsPerServer = requests / servers.Count;
-        int remainingRequests = requests % servers.Count;
-
-        for (int i = 0; i < servers.Count; i++)
-        {
-            int requestsToSend = requestsPerServer + (i < remainingRequests ? 1 : 0);
-            servers[i].HandleRequests(requestsToSend);
-        }
+        //I will implement abstract methods in subclasses
+        public abstract int CalculateRequests(int requestsCount);
+        public abstract List<IServer> ObtainServers();
+        public abstract void SendRequestsToServers(int requests, List<IServer> servers);
     }
 }

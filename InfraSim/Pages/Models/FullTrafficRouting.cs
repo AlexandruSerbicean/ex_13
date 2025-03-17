@@ -5,7 +5,12 @@ namespace InfraSim.Pages.Models
 {
     public class FullTrafficRouting : TrafficRouting
     {
-        public FullTrafficRouting(List<IServer> servers) : base(servers) { }
+        private readonly ServerType _serverType;
+
+        public FullTrafficRouting(List<IServer> servers, ServerType serverType) : base(servers)
+        {
+            _serverType = serverType;
+        }
 
         public override void RouteTraffic(int requestsCount)
         {
@@ -21,11 +26,17 @@ namespace InfraSim.Pages.Models
 
         public override List<IServer> ObtainServers()
         {
-            return _servers; 
+            // Filter servers by the specified ServerType
+            return _servers.Where(s => s.ServerType == _serverType).ToList();
         }
 
         public override void SendRequestsToServers(int requests, List<IServer> servers)
         {
+            if (servers.Count == 0)
+            {
+                return; // No servers available to handle requests
+            }
+
             int requestsPerServer = requests / servers.Count;
             int remainder = requests % servers.Count;
 

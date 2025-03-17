@@ -1,7 +1,8 @@
-namespace InfraSim.Pages.Models;
-
-public interface IServer
+namespace InfraSim.Pages.Models
 {
-    ServerType ServerType { get; }
-    void HandleRequests(int requestsCount);  
+    public interface IServer
+    {
+        ServerType ServerType { get; }
+        void HandleRequests(int requestsCount);
+    }
 }

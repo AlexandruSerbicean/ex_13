@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using InfraSim.Pages.Models;
 using Xunit;
 using Moq;
 

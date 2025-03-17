@@ -1,0 +1,10 @@
+namespace InfraSim.Pages.Models
+{
+    public class CacheTrafficRouting : ITrafficRouting
+    {
+        public void RouteTraffic(int requestsCount)
+        {
+
+        }
+    }
+}

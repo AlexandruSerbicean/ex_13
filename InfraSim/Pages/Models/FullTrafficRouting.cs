@@ -7,6 +7,13 @@ namespace InfraSim.Pages.Models
     {
         public FullTrafficRouting(List<IServer> servers) : base(servers) { }
 
+        public override void RouteTraffic(int requestsCount)
+        {
+            int totalRequests = CalculateRequests(requestsCount);
+            List<IServer> availableServers = ObtainServers();
+            SendRequestsToServers(totalRequests, availableServers);
+        }
+
         public override int CalculateRequests(int requestsCount)
         {
             return requestsCount; 

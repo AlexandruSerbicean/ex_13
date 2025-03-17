@@ -29,21 +29,27 @@ public class TrafficRoutingTests
     [Fact]
     public void TestSendRequestsToServers_ShouldDistributeRequestsEvenly()
     {
-        // Arrange
-        var mockServer1 = new Mock<IServer>();
-        var mockServer2 = new Mock<IServer>();
-        var mockServer3 = new Mock<IServer>();
-        List<IServer> servers = new List<IServer> { mockServer1.Object, mockServer2.Object, mockServer3.Object };
-        TrafficRouting trafficRouting = new TrafficRouting(servers);
+    // Arrange
+    var mockServer1 = new Mock<IServer>();
+    var mockServer2 = new Mock<IServer>();
+    var mockServer3 = new Mock<IServer>();
+    List<IServer> servers = new List<IServer> { mockServer1.Object, mockServer2.Object, mockServer3.Object };
+    TrafficRouting trafficRouting = new TrafficRouting(servers);
 
-        // Act
-        trafficRouting.SendRequestsToServers(100, servers);
+    // Act
+    trafficRouting.SendRequestsToServers(100, servers);
 
-        // Assert (each server gets 33, one gets 34)
-        mockServer1.Verify(s => s.HandleRequests(It.IsInRange(33, 34, Moq.Range.Inclusive)), Times.Once);
-        mockServer2.Verify(s => s.HandleRequests(It.IsInRange(33, 34, Moq.Range.Inclusive)), Times.Once);
-        mockServer3.Verify(s => s.HandleRequests(It.IsInRange(33, 34, Moq.Range.Inclusive)), Times.Once);
+    // Expected requests
+    int expectedRequestsPerServer1 = 34; // One server gets 34
+    int expectedRequestsPerServer2 = 33; // Other two servers get 33
+    int expectedRequestsPerServer3 = 33;
+
+    // Assert (Strict validation)
+    mockServer1.Verify(s => s.HandleRequests(expectedRequestsPerServer1), Times.Once);
+    mockServer2.Verify(s => s.HandleRequests(expectedRequestsPerServer2), Times.Once);
+    mockServer3.Verify(s => s.HandleRequests(expectedRequestsPerServer3), Times.Once);
     }
+
 
     [Fact]
     public void ObtainServers_ShouldReturnCorrectServers()

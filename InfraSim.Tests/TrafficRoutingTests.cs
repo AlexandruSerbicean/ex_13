@@ -63,5 +63,6 @@ public class TrafficRoutingTests
 
         // Assert
         Assert.Equal(servers.Count, result.Count);
+        Assert.Equal(servers, result);
     }   
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using InfraSim.Pages.Models;
 
-public class TrafficRouting : ITrafficRouting
+public abstract class TrafficRouting : ITrafficRouting
 {
     public List<IServer> _servers;
 

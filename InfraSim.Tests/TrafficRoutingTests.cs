@@ -10,7 +10,7 @@ public class TrafficRoutingTests
     public void TestRequestCount_ShouldReturnCorrectRequestCount()
     {
         // Arrange
-        TrafficRouting trafficRouting = new TrafficRouting(new List<IServer>());
+        TrafficRouting trafficRouting = new FullTrafficRouting(new List<IServer>());
 
         // Act
         int result = trafficRouting.CalculateRequests(100);

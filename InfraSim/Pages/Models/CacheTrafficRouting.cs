@@ -21,11 +21,13 @@ namespace InfraSim.Pages.Models
 
         public override List<IServer> ObtainServers()
         {
-            return _servers.Where(s => s.ServerType == ServerType.Cache).ToList();
+            return _servers?.Where(s => s.ServerType == ServerType.Cache).ToList() ?? new List<IServer>();
         }
 
         public override void SendRequestsToServers(int requests, List<IServer> servers)
         {
+            if (servers.Count == 0) return;  // ✅ Prevents division by zero
+
             int requestsPerServer = requests / servers.Count;
             int remainder = requests % servers.Count;
 

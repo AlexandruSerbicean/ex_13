@@ -7,7 +7,7 @@ using System.Linq;
 public class CacheTrafficRoutingTests
 {
     [Fact]
-    public void CacheTrafficRouting_ShouldSend30PercentRequestsToCache()
+    public void CacheTrafficRouting_ShouldSend80PercentRequestsToCache()
     {
         // Arrange
         var mockServer1 = new Mock<IServer>();
@@ -23,7 +23,7 @@ public class CacheTrafficRoutingTests
         var routing = new CacheTrafficRouting(servers);
 
         int totalRequests = 100;
-        int expectedCacheRequests = (int)(totalRequests * 0.3); // 30% of 100
+        int expectedCacheRequests = (int)(totalRequests * 0.8); 
 
         // Act
         routing.RouteTraffic(totalRequests);
@@ -31,6 +31,6 @@ public class CacheTrafficRoutingTests
         // Assert: Only Cache servers should receive traffic
         mockServer1.Verify(s => s.HandleRequests(expectedCacheRequests / 2), Times.Once);
         mockServer2.Verify(s => s.HandleRequests(expectedCacheRequests / 2), Times.Once);
-        mockServer3.Verify(s => s.HandleRequests(It.IsAny<int>()), Times.Never); // Should receive 0
+        mockServer3.Verify(s => s.HandleRequests(It.IsAny<int>()), Times.Never);
     }
-} 
+}

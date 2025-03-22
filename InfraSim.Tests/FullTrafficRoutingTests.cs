@@ -3,7 +3,7 @@ using InfraSim.Pages.Models;
 using Xunit;
 using Moq;
 
-public class TrafficRoutingTests
+public class FullTrafficRoutingTests
 {
     [Fact] 
     public void TestRequestCount_ShouldReturnCorrectRequestCount()

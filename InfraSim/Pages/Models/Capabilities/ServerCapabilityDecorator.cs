@@ -1,6 +1,6 @@
 namespace InfraSim.Pages.Models.Capabilities
 {
-    public class ServerCapabilityDecorator : IServerCapability
+    public abstract class ServerCapabilityDecorator : IServerCapability
     {
         protected readonly IServerCapability _capability;
 
@@ -9,7 +9,7 @@ namespace InfraSim.Pages.Models.Capabilities
             _capability = capability;
         }
 
-        public virtual long MaximumRequests => _capability.MaximumRequests;
-        public virtual int Cost => _capability.Cost;
+        public abstract long MaximumRequests { get; }
+        public abstract int Cost { get; }
     }
 }

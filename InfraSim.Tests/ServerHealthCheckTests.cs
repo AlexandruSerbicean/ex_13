@@ -1,4 +1,3 @@
-
 using Xunit;
 using InfraSim.Pages.Models;
 using InfraSim.Pages.Models.Capabilities;
@@ -12,6 +11,30 @@ namespace InfraSim.Tests
         private class TestServer : BaseServer
         {
             public TestServer(IServerCapability capability) : base(ServerType.Server, capability) { }
+        }
+
+        [Theory]
+        [InlineData(0, typeof(IdleState))]
+        [InlineData(500, typeof(NormalState))]
+        [InlineData(900, typeof(OverloadedState))]
+        [InlineData(1500, typeof(FailedState))]
+        public void StateTransition_ShouldUpdateCorrectly(int requestCount, Type expectedState)
+        {
+            var server = new TestServer(new ServerCapability());
+
+            var allStates = new IServerState[] {
+                new IdleState(),
+                new NormalState(),
+                new OverloadedState(),
+                new FailedState()
+            };
+
+            foreach (var initialState in allStates)
+            {
+                server.State = initialState;
+                server.HandleRequests(requestCount);
+                Assert.IsType(expectedState, server.State);
+            }
         }
 
         [Theory]
@@ -30,20 +53,6 @@ namespace InfraSim.Tests
             Assert.Equal(isNormal, healthCheck.IsNormal);
             Assert.Equal(isOverloaded, healthCheck.IsOverloaded);
             Assert.Equal(isFailed, healthCheck.IsFailed);
-        }
-
-        [Theory]
-        [InlineData(0, typeof(IdleState))]
-        [InlineData(500, typeof(NormalState))]
-        [InlineData(900, typeof(OverloadedState))]
-        [InlineData(1500, typeof(FailedState))]
-        public void StateTransition_ShouldUpdateCorrectly(int requestCount, Type expectedState)
-        {
-            var server = new TestServer(new ServerCapability());
-            server.State = new NormalState(); 
-            server.HandleRequests(requestCount);
-
-            Assert.IsType(expectedState, server.State);
         }
     }
 }

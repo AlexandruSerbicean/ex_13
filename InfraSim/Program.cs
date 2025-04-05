@@ -18,10 +18,9 @@ namespace InfraSim
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-                
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddSingleton<IServerCapability, ServerCapability>();
+                    services.AddSingleton<IServerCapability, ServerCapability>(); //add IServerCapability as singleton
                 });
     }
 }

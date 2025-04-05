@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using InfraSim.Pages.Models;
 using InfraSim.Pages.Models.Capabilities;
+using InfraSim.Pages.Models.State;
 
 namespace InfraSim
 {
@@ -11,7 +13,7 @@ namespace InfraSim
         {
             CreateHostBuilder(args).Build().Run();
         }
-    
+
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
@@ -20,7 +22,14 @@ namespace InfraSim
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddSingleton<IServerCapability, ServerCapability>(); //add IServerCapability as singleton
+
+                    services.AddSingleton<ICapabilityFactory, ServerCapabilityFactory>();
+
+                    services.AddSingleton<IServerFactory, ServerFactory>();
+
+                    services.AddSingleton<IInfrastructureMediator, InfrastructureMediator>();
+
+                    services.AddSingleton<IServerCapability, ServerCapability>();
                 });
     }
 }

@@ -1,3 +1,6 @@
+using InfraSim.Pages.Models;
+using InfraSim.Pages.Models.Capabilities;
+using InfraSim.Pages.Models.State;
 public class ServerBuilder : IServerBuilder
 {
     private ServerType _type = ServerType.Server;
@@ -22,7 +25,7 @@ public class ServerBuilder : IServerBuilder
         return this;
     }
 
-    public Server Build()
+    public IServer Build()
     {
         return new Server(_type, _capability, _state);
     }

@@ -1,8 +1,14 @@
-public class Server : BaseServer
+using InfraSim.Pages.Models.Capabilities;
+using InfraSim.Pages.Models.State;
+
+namespace InfraSim.Pages.Models
 {
-    public Server(ServerType type, IServerCapability capability, IServerState state) 
-        : base(type, capability)
+    public class Server : BaseServer
     {
-        State = state;
+        public Server(ServerType type, IServerCapability capability, IServerState state)
+            : base(type, capability)
+        {
+            State = state;
+        }
     }
 }

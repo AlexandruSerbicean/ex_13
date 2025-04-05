@@ -8,6 +8,6 @@ namespace InfraSim.Pages.Models
         IServerBuilder WithType(ServerType type);
         IServerBuilder WithCapability(IServerCapability capability);
         IServerBuilder WithState(IServerState state);
-        Server Build();
+        IServer Build(); 
     }
 }

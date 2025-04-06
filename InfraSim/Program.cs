@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using InfraSim.Pages.Models;
 using InfraSim.Pages.Models.Capabilities;
-using InfraSim.Pages.Models.State;
+using InfraSim.Pages.Models.Database;
 
 namespace InfraSim
 {
@@ -30,6 +30,8 @@ namespace InfraSim
                     services.AddSingleton<IInfrastructureMediator, InfrastructureMediator>();
 
                     services.AddSingleton<IServerCapability, ServerCapability>();
+
+                    services.AddDbContext<InfraSimContext>();
                 });
     }
 }

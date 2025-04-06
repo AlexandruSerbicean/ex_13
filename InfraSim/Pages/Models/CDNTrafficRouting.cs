@@ -7,10 +7,9 @@ namespace InfraSim.Pages.Models
     {
         public CDNTrafficRouting(List<IServer> servers) : base(servers) { }
 
-        // ✅ Trebuie să rămână `public` pentru a respecta semnătura din clasa de bază
         public override int CalculateRequests(int requestsCount)
         {
-            return (int)(requestsCount * 0.7); // ✅ 70% din trafic la CDN
+            return (int)(requestsCount * 0.7);
         }
 
         public override List<IServer> ObtainServers()

@@ -1,4 +1,6 @@
 using System;
+using InfraSim.Pages.Models;
+using InfraSim.Pages.Models.Capabilities;
 
 namespace InfraSim.Pages.Models.Capabilities
 {
@@ -20,6 +22,8 @@ namespace InfraSim.Pages.Models.Capabilities
                                      new TrafficDistributionDecorator(
                                          new TemporaryStorageDecorator(
                                              new ServerCapability()))),
+
+                ServerType.Cluster => new ServerCapability(), // ✅ Adaugă-l dacă e necesar pentru teste
 
                 _ => throw new ArgumentOutOfRangeException(nameof(type), $"Server type '{type}' is not supported.")
             };

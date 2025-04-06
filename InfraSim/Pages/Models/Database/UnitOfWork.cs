@@ -8,8 +8,10 @@ namespace InfraSim.Pages.Models.Database
     {
         private IDbContextTransaction? Transaction { get; set; }
 
-        private IRepositoryFactory RepositoryFactory { get; set; }
         private InfraSimContext Context { get; set; }
+        private IRepositoryFactory RepositoryFactory { get; set; }
+
+        private IDictionary<Type, object> Repositories { get; } = new Dictionary<Type, object>();
 
         public UnitOfWork(InfraSimContext context, IRepositoryFactory repositoryFactory)
         {
@@ -39,23 +41,20 @@ namespace InfraSim.Pages.Models.Database
             Context.SaveChanges();
         }
 
-        public void Dispose()
-        {
-            Transaction?.Dispose();
-            Context.Dispose();
-        }
-
-        private IDictionary<Type, object> Repositories { get; } = new Dictionary<Type, object>();
-
         public IRepository<TEntity> GetRepository<TEntity>() where TEntity : DbItem
         {
             if (!Repositories.ContainsKey(typeof(TEntity)))
             {
-                var repo = RepositoryFactory.Create<TEntity>();
-                Repositories[typeof(TEntity)] = repo;
+            Repositories[typeof(TEntity)] = RepositoryFactory.Create<TEntity>();
             }
 
-            return (IRepository<TEntity>)Repositories[typeof(TEntity)];
+        return (IRepository<TEntity>)Repositories[typeof(TEntity)];
+        }
+
+        public void Dispose()
+        {
+            Transaction?.Dispose();
+            Context.Dispose();
         }
     }
 }

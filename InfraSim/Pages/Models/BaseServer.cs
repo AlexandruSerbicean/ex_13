@@ -1,3 +1,4 @@
+using System;
 using InfraSim.Pages.Models.Capabilities;
 using InfraSim.Pages.Models.State;
 
@@ -6,6 +7,8 @@ namespace InfraSim.Pages.Models
     public abstract class BaseServer : IServer
     {
         private int Requests = 0;
+
+        public Guid Id { get; set; } 
 
         public ServerType ServerType { get; private set; }
         public IServerCapability Capability { get; private set; }

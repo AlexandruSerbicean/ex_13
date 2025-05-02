@@ -37,6 +37,8 @@ namespace InfraSim
 
                     services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+                    services.AddSingleton<IServerDataMapper, ServerDataMapper>();
+
                 });
     }
 }

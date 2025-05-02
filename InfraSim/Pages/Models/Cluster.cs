@@ -12,6 +12,7 @@ namespace InfraSim.Pages.Models
         {
         }
 
+        public List<IServer> Servers => _servers;
         public void AddServer(IServer server)
         {
             _servers.Add(server);
@@ -21,7 +22,5 @@ namespace InfraSim.Pages.Models
         {
             _servers.Remove(server);
         }
-
-        public List<IServer> Servers => _servers;
-    }
+   }
 }

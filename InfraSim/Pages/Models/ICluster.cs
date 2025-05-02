@@ -2,10 +2,10 @@ using System.Collections.Generic;
 
 namespace InfraSim.Pages.Models
 {
-    public interface ICluster : IServer
+    public interface ICluster : IServer, IServerList
     {
-        void AddServer(IServer server);
-        void RemoveServer(IServer server);
-        List<IServer> Servers { get; }
+      List<IServer> Servers {get;}
+      void AddServer(IServer server);
+      void RemoveServer(IServer server);
     }
 }

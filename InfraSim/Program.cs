@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using InfraSim.Pages.Models;
 using InfraSim.Pages.Models.Capabilities;
 using InfraSim.Pages.Models.Database;
+using InfraSim.Pages.Models.Commands;
 
 namespace InfraSim
 {
@@ -38,6 +39,8 @@ namespace InfraSim
                     services.AddScoped<IUnitOfWork, UnitOfWork>();
 
                     services.AddSingleton<IServerDataMapper, ServerDataMapper>();
+                    
+                    services.AddSingleton<ICommandManager, CommandManager>();
 
                 });
     }

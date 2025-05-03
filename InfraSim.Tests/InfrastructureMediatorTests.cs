@@ -1,6 +1,7 @@
 using InfraSim.Pages.Models;
 using InfraSim.Pages.Models.Capabilities;
 using InfraSim.Pages.Models.Database;
+using InfraSim.Pages.Models.Commands;
 
 namespace InfraSim.Tests.MediatorTests
 {
@@ -8,6 +9,7 @@ namespace InfraSim.Tests.MediatorTests
     {
         private readonly IServerFactory factory;
         private readonly IServerDataMapper dataMapper;
+        private readonly ICommandManager commandManager;
 
         public InfrastructureMediatorTests()
         {
@@ -20,12 +22,15 @@ namespace InfraSim.Tests.MediatorTests
             var repoFactory = new RepositoryFactory(context);
             var unitOfWork = new UnitOfWork(context, repoFactory);
             dataMapper = new ServerDataMapper(unitOfWork, capabilityFactory);
+
+            // ✅ Inițializare lipsă
+            commandManager = new CommandManager();
         }
 
         [Fact]
         public void AddServer_ShouldAddToGateway_IfServerIsCDN()
         {
-            var mediator = new InfrastructureMediator(factory, dataMapper);
+            var mediator = new InfrastructureMediator(factory, dataMapper, commandManager);
             var server = factory.CreateServer(ServerType.CDN);
 
             mediator.AddServer(server);
@@ -36,7 +41,7 @@ namespace InfraSim.Tests.MediatorTests
         [Fact]
         public void AddServer_ShouldAddToProcessors_IfServerIsCache()
         {
-            var mediator = new InfrastructureMediator(factory, dataMapper);
+            var mediator = new InfrastructureMediator(factory, dataMapper, commandManager);
             var server = factory.CreateServer(ServerType.Cache);
 
             mediator.AddServer(server);
@@ -47,7 +52,7 @@ namespace InfraSim.Tests.MediatorTests
         [Fact]
         public void InfrastructureMediator_ShouldConnectGatewayWithProcessors()
         {
-            var mediator = new InfrastructureMediator(factory, dataMapper);
+            var mediator = new InfrastructureMediator(factory, dataMapper, commandManager);
 
             Assert.Contains(mediator.Processors, mediator.Gateway.Servers);
         }

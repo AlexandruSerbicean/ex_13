@@ -1,4 +1,5 @@
 using InfraSim.Pages.Models.Iterator;
+using InfraSim.Pages.Models.Visitor;
 using InfraSim.Pages.Models.Database;
 using InfraSim.Pages.Models.Commands;
 
@@ -42,6 +43,20 @@ namespace InfraSim.Pages.Models
         public IServerIterator CreateServerIterator()
         {
             return new ServerIterator(Gateway);
+        }
+
+        public int TotalCost
+        {
+            get
+            {
+                IServerIterator iterator   = CreateServerIterator();
+                var costCalculator         = new CostCalculator();
+
+                while (iterator.HasNext)
+                iterator.Next().Accept(costCalculator);
+
+                return costCalculator.TotalCost;
+            }
         }
     }
 }

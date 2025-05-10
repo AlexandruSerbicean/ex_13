@@ -1,4 +1,5 @@
 using System;
+using InfraSim.Pages.Models.Visitor;
 using InfraSim.Pages.Models.Capabilities;
 using InfraSim.Pages.Models.State;
 
@@ -12,6 +13,7 @@ namespace InfraSim.Pages.Models
 
         public ServerType ServerType { get; private set; }
         public IServerCapability Capability { get; private set; }
+        public void Accept(IServerVisitor visitor) => visitor.Visit(this);
 
         public int RequestsCount
         {

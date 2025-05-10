@@ -21,7 +21,7 @@ namespace InfraSim.Tests.CommandTests
             context.Database.EnsureCreated();
 
             var capabilityFactory = new ServerCapabilityFactory();
-            factory = new ServerFactory(capabilityFactory);
+            factory = new ServerFactory(capabilityFactory, dataMapper);
             testServer = factory.CreateServer(ServerType.Server);
 
             var repoFactory = new RepositoryFactory(context);

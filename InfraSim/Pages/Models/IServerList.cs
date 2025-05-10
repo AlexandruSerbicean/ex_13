@@ -4,7 +4,7 @@ namespace InfraSim.Pages.Models
 {
     public interface IServerList
     {
-        List<IServer> Servers { get; }
+        List<IServer> Servers { get; set; }
 
         void AddServer(IServer server);
 

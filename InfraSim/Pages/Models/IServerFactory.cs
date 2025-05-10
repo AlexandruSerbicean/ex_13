@@ -7,5 +7,7 @@ public interface IServerFactory
     IServer CreateCDN();
     IServer CreateLoadBalancer();
     ICluster CreateCluster();
+    ICluster CreateGatewayCluster();
+    ICluster CreateProcessorsCluster();
 }
 }

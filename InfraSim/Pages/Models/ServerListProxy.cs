@@ -1,19 +1,24 @@
 using System.Collections.Generic;
-namespace InfraSim.Pages.Models.Database
 
+namespace InfraSim.Pages.Models.Database
 {
     public class ServerListProxy : IServerList
     {
-        private readonly IServerList _realCluster;
+        private readonly IServerList       _realCluster;
         private readonly IServerDataMapper _dataMapper;
 
-        public ServerListProxy(IServerList realCluster, IServerDataMapper dataMapper)
+        public ServerListProxy(IServerList realCluster,
+                               IServerDataMapper dataMapper)
         {
             _realCluster = realCluster;
-            _dataMapper = dataMapper;
+            _dataMapper  = dataMapper;
         }
 
-        public List<IServer> Servers => _realCluster.Servers;
+        public List<IServer> Servers
+        {
+            get => _realCluster.Servers;
+            set => _realCluster.Servers = value;
+        }
 
         public void AddServer(IServer server)
         {

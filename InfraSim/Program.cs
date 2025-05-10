@@ -42,6 +42,10 @@ namespace InfraSim
                     
                     services.AddSingleton<ICommandManager, CommandManager>();
 
+                    services.AddScoped<IServerDataMapper, ServerDataMapper>();
+
+                    services.AddScoped<IServerFactory, ServerFactory>();
+
                 });
     }
 }

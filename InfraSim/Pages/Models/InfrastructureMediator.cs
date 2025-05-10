@@ -10,14 +10,14 @@ namespace InfraSim.Pages.Models
         public ICluster Processors { get; private set; }
         private readonly IServerDataMapper Mapper;
         private readonly ICommandManager CommandManager;
-        public InfrastructureMediator(IServerFactory serverFactory, IServerDataMapper dataMapper, ICommandManager commandManager)
+        public InfrastructureMediator(IServerFactory serverFactory,IServerDataMapper  mapper,ICommandManager commandManager)
         {
-            Mapper = dataMapper;
+            Mapper         = mapper;
             CommandManager = commandManager;
 
-            Gateway = (ICluster)serverFactory.CreateCluster();
-            Processors = (ICluster)serverFactory.CreateCluster();
-            Gateway.AddServer(Processors);
+            Gateway    = serverFactory.CreateGatewayCluster();
+            Processors = serverFactory.CreateProcessorsCluster();
+            Gateway.AddServer(Processors);          
         }
 
         public void AddServer(IServer server)

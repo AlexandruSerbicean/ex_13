@@ -17,13 +17,12 @@ namespace InfraSim.Tests.MediatorTests
             context.Database.EnsureCreated();
 
             var capabilityFactory = new ServerCapabilityFactory();
-            factory = new ServerFactory(capabilityFactory);
+            factory = new ServerFactory(capabilityFactory, dataMapper);
 
             var repoFactory = new RepositoryFactory(context);
             var unitOfWork = new UnitOfWork(context, repoFactory);
             dataMapper = new ServerDataMapper(unitOfWork, capabilityFactory);
 
-            // ✅ Inițializare lipsă
             commandManager = new CommandManager();
         }
 

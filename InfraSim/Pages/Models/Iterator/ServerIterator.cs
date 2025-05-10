@@ -25,7 +25,6 @@ namespace InfraSim.Pages.Models.Iterator
             return _servers[_position++];
         }
 
-
         private static List<IServer> GetServers(ICluster cluster)
         {
             var result = new List<IServer>();

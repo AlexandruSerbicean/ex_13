@@ -8,12 +8,8 @@ namespace InfraSim.Pages.Models
     {
         public ICluster Gateway { get; private set; }
         public ICluster Processors { get; private set; }
-
         private readonly IServerDataMapper Mapper;
         private readonly ICommandManager CommandManager;
-        public IServerIterator CreateServerIterator()
-            => new ServerIterator(Gateway);
-
         public InfrastructureMediator(IServerFactory serverFactory, IServerDataMapper dataMapper, ICommandManager commandManager)
         {
             Mapper = dataMapper;
@@ -42,6 +38,10 @@ namespace InfraSim.Pages.Models
                     CommandManager.Execute(addServerCommand);
                     break;
             }
+        }
+        public IServerIterator CreateServerIterator()
+        {
+            return new ServerIterator(Gateway);
         }
     }
 }

@@ -1,3 +1,4 @@
+using InfraSim.Pages.Models.Iterator;
 using InfraSim.Pages.Models.Database;
 using InfraSim.Pages.Models.Commands;
 
@@ -10,11 +11,13 @@ namespace InfraSim.Pages.Models
 
         private readonly IServerDataMapper Mapper;
         private readonly ICommandManager CommandManager;
+        public IServerIterator CreateServerIterator()
+            => new ServerIterator(Gateway);
 
         public InfrastructureMediator(IServerFactory serverFactory, IServerDataMapper dataMapper, ICommandManager commandManager)
         {
             Mapper = dataMapper;
-            CommandManager = commandManager; // ✅ AI UITAT ACEASTĂ LINIE
+            CommandManager = commandManager;
 
             Gateway = (ICluster)serverFactory.CreateCluster();
             Processors = (ICluster)serverFactory.CreateCluster();

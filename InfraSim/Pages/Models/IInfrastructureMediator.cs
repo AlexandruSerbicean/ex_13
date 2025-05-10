@@ -1,3 +1,4 @@
+using InfraSim.Pages.Models.Iterator;
 namespace InfraSim.Pages.Models
 {
     public interface IInfrastructureMediator
@@ -5,5 +6,6 @@ namespace InfraSim.Pages.Models
         void AddServer(IServer server);
         ICluster Gateway { get; }
         ICluster Processors { get; }
+        IServerIterator CreateServerIterator();
     }
 }

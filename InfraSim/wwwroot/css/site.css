@@ -179,13 +179,26 @@ app {
     }
 
     .sidebar .collapse {
-        /* Never collapse the sidebar for wide screens */
+
         display: block;
     }
 }
 
-.status         { width: 20px; height: 20px; border-radius: 10px; }
-.blue           { background-color: blue;    }
-.gray           { background-color: gray;    }
-.orange         { background-color: orange;  }
-.red            { background-color: red;     }
+
+.img-size       { width: 60px; height: 60px; object-fit: contain; }
+
+.servers-panel  { display:flex; flex-wrap:wrap; gap:1rem; }
+
+.parent-container { display:flex; gap:2rem; }
+
+.round-button   { padding:.6rem 1.2rem; border-radius:6px; }
+
+.green-button   { background:#36c12e; color:#fff; }
+.grey-button    { background:#ccc;    color:#000; }
+
+.div-container  { margin-bottom:.5rem; }
+.status         { width:20px; height:20px; border-radius:50%; }
+.status.blue    { background:#007bff; }
+.status.gray    { background:#888;    }
+.status.orange  { background:#f38400; }
+.status.red     { background:#d9534f; }

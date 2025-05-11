@@ -1,28 +1,77 @@
+@using InfraSim.Pages.Models
+@using InfraSim.Pages.Models.Commands
+@inject IServerFactory  ServerFactory
+@inject ICommandManager CommandManager
+
+<!-- ────── Start ────── -->
 <div class="div-container">
-    <button class="round-button green-button" @onclick="OnStartClicked">Start</button>
-    <button class="round-button grey-button" @onclick="OnAddServerClicked">Add Server</button>
+    <button class="round-button green-button"
+        @onclick="() => StartPressed.InvokeAsync()">
+    Start
+</button>
+
+</div>
+
+<!-- ────── Gateway servers ────── -->
+<div class="div-container">
+    <button class="round-button grey-button"
+            @onclick="() => AddPressed.InvokeAsync(ServerFactory.CreateCDN())">
+        Add CDN
+    </button>
+
+    <button class="round-button grey-button"
+            @onclick="() => AddPressed.InvokeAsync(ServerFactory.CreateLoadBalancer())">
+        Add LB
+    </button>
+</div>
+
+<!-- ────── Processor servers ────── -->
+<div class="div-container">
+    <button class="round-button grey-button"
+            @onclick="() => AddPressed.InvokeAsync(ServerFactory.CreateServer())">
+        Add Server
+    </button>
+
+    <button class="round-button grey-button"
+            @onclick="() => AddPressed.InvokeAsync(ServerFactory.CreateCache())">
+        Add Cache
+    </button>
+</div>
+
+<!-- ────── Undo / Redo ────── -->
+<div class="div-container">
+    <button class="round-button grey-button"
+            disabled="@UndoDisabled"
+            @onclick="Undo">
+        Undo
+    </button>
+
+    <button class="round-button grey-button"
+            disabled="@RedoDisabled"
+            @onclick="Redo">
+        Redo
+    </button>
 </div>
 
 @code {
-    [Parameter]
-    public EventCallback StartPressed { get; set; }
+    /* events coming from the parent page */
+    [Parameter] public EventCallback               StartPressed { get; set; }
+    [Parameter] public EventCallback<IServer>      AddPressed  { get; set; }
+    [Parameter] public EventCallback               Refresh      { get; set; }
 
-    [Parameter]
-    public EventCallback AddServer { get; set; }
+    /* undo / redo helpers */
+    private bool UndoDisabled => !CommandManager.HasUndo;
+    private bool RedoDisabled => !CommandManager.HasRedo;
 
-    private async Task OnStartClicked()
+    private void Undo()
     {
-        if (StartPressed.HasDelegate)
-        {
-            await StartPressed.InvokeAsync();
-        }
+        CommandManager.Undo();
+        Refresh.InvokeAsync();
     }
 
-    private async Task OnAddServerClicked()
+    private void Redo()
     {
-        if (AddServer.HasDelegate)
-        {
-            await AddServer.InvokeAsync();
-        }
+        CommandManager.Redo();
+        Refresh.InvokeAsync();
     }
 }

@@ -13,9 +13,7 @@ namespace InfraSim.Pages.Models.Commands
         public void Execute(ICommand command)
         {
             if (HasRedo)
-            {
                 Commands.RemoveRange(Position + 1, Commands.Count - Position - 1);
-            }
 
             command.Do();
             Commands.Add(command);

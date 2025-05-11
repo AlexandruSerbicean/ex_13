@@ -26,6 +26,7 @@ namespace InfraSim
             services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<UserCounter>(); // Înregistrează UserCounter ca serviciu singleton
         }
+        
 
         // Configurează pipeline-ul de request-uri
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

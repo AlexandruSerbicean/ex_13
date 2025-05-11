@@ -12,5 +12,6 @@ namespace InfraSim.Pages.Models
         IServerCapability Capability { get; }
         int RequestsCount { get; set; }
         void HandleRequests(int requests);
+
     }
 }

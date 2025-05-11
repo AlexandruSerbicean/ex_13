@@ -1,4 +1,17 @@
-<div class="server-container">
-    <img src="images/Server.png" alt="Server" class="server-image" />
-    <span>Server</span>
-</div>
+@using InfraSim.Pages.Models.UI   
+@using InfraSim.Pages.Models
+
+@if (ServerInfo is not null)
+{
+    <div class="div-container">
+        <img class="img-size" src="@ServerInfo.ImageUrl" />
+        <div>
+            <div class="status @ServerInfo.StatusColor">&nbsp;</div>
+            <span>@ServerInfo.Name</span>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public IServerInfo? ServerInfo { get; set; }
+}

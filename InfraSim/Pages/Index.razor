@@ -1,50 +1,66 @@
 ﻿@page "/"
+
+@using InfraSim.Pages.Models
+@using InfraSim.Pages.Models.UI         
+@using InfraSim.Pages.Models.Iterator    
 @using InfraSim.Services
-@using InfraSim.Pages
-@inject UserCounter CounterService
+@inject IInfrastructureMediator InfrastructureMediator
+@inject UserCounter            Counter
 
 <PageTitle>Home</PageTitle>
 
 <div class="parent-container">
+    <!-- Control panel -->
     <div class="control-panel">
-        <Actions StartPressed="@StartIncrementing" AddServer="@AddServer" />
-        <Users UserCount="@CounterService.Counter"/>
+        <Actions StartPressed="StartIncrementing"
+                 AddPressed="AddServer"
+                 Refresh="RefreshUI" />
+        <Users UserCount="@Counter.Counter" />
+        <span>€ @InfrastructureMediator.TotalCost</span>
     </div>
-    
+
+    <!-- Servers grid -->
     <div class="servers-panel">
-        @for (int i = 0; i < ServerCount; i++)
+        @foreach (IServer srv in Servers)
         {
-            <Server />
+            <Server ServerInfo="@(new ServerInfoAdapter(srv))" />
         }
     </div>
 </div>
 
 @code {
-    private int ServerCount = 0;
+    private List<IServer> Servers = new();
 
     protected override void OnInitialized()
     {
-        CounterService.ResetCounter(); // Resetăm counter-ul la fiecare reîncărcare
-        CounterService.OnCounterChanged += UpdateCounter;
+        Counter.OnCounterChanged += CounterChanged;
+        RefreshUI();
     }
 
-    private void UpdateCounter()
-    {
-        InvokeAsync(StateHasChanged);
-    }
-
-    private async Task StartIncrementing()
-    {
-        await CounterService.StartIncrementing();
-    }
-
-    private void AddServer()
-    {
-        ServerCount++;
-    }
+    private void CounterChanged()
+        => InvokeAsync(StateHasChanged);  
 
     public void Dispose()
+        => Counter.OnCounterChanged -= CounterChanged;
+
+
+    private async Task StartIncrementing()
+        => await Counter.StartIncrementing();
+
+    private void AddServer(IServer server)
     {
-        CounterService.OnCounterChanged -= UpdateCounter;
+        InfrastructureMediator.AddServer(server);
+        RefreshUI();
+    }
+
+    private void RefreshUI()
+    {
+    Servers = new List<IServer>();
+        IServerIterator it = InfrastructureMediator.CreateServerIterator();
+
+        while (it.HasNext)
+            Servers.Add(it.Next());
+
+            Servers.Sort((a, b) => a.ServerType.CompareTo(b.ServerType));
     }
 }

@@ -1,11 +1,8 @@
-using System;                             // <- ADD THIS
+using System;                             
 using InfraSim.Pages.Models.State;
 
 namespace InfraSim.Pages.Models.UI
 {
-    /// <summary>
-    /// Adapter — converts <see cref="IServer"/> into a view‑model
-    /// </summary>
     public sealed class ServerInfoAdapter : IServerInfo
     {
         private static readonly string ImgBase = "/images/";
@@ -14,7 +11,7 @@ namespace InfraSim.Pages.Models.UI
 
         public ServerInfoAdapter(IServer server) => Server = server;
 
-        /* ---------- IServerInfo implementation ---------- */
+
 
         public string Name => Server.ServerType switch
         {
@@ -28,9 +25,9 @@ namespace InfraSim.Pages.Models.UI
         public string ImageUrl => Server.ServerType switch
         {
             ServerType.Server       => $"{ImgBase}server.png",
-            ServerType.Cache        => $"{ImgBase}cache.png",
-            ServerType.LoadBalancer => $"{ImgBase}loadbalancer.png",
-            ServerType.CDN          => $"{ImgBase}cdn.png",
+            ServerType.Cache        => $"{ImgBase}Cache.webp",
+            ServerType.LoadBalancer => $"{ImgBase}LB.png",
+            ServerType.CDN          => $"{ImgBase}CDN.png",
             _ => throw new NotImplementedException($"No icon mapped for {Server.ServerType}")
         };
 

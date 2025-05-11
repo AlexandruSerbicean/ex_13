@@ -1,51 +1,43 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using InfraSim.Services;
 using InfraSim.Pages.Models;
 using InfraSim.Pages.Models.Capabilities;
-using InfraSim.Pages.Models.Database;
 using InfraSim.Pages.Models.Commands;
+using InfraSim.Pages.Models.Database;
 
 namespace InfraSim
 {
     public class Program
     {
-        public static void Main(string[] args)
-        {
+        public static void Main(string[] args) =>
             CreateHostBuilder(args).Build().Run();
-        }
-
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<Startup>())
+                .ConfigureServices((context, services) =>
                 {
-                    webBuilder.UseStartup<Startup>();
-                })
-                .ConfigureServices((hostContext, services) =>
-                {
-
-                    services.AddSingleton<ICapabilityFactory, ServerCapabilityFactory>();
-
-                    services.AddSingleton<IServerFactory, ServerFactory>();
-
-                    services.AddSingleton<IInfrastructureMediator, InfrastructureMediator>();
-
-                    services.AddSingleton<IServerCapability, ServerCapability>();
-
+                
                     services.AddDbContext<InfraSimContext>();
-                    
-                    services.AddSingleton<IRepositoryFactory, RepositoryFactory>();
+                    services.AddScoped<IRepositoryFactory,  RepositoryFactory>();
+                    services.AddScoped<IUnitOfWork,        UnitOfWork>();
+                    services.AddScoped<IServerDataMapper,  ServerDataMapper>();
+                    services.AddScoped<IServerFactory,     ServerFactory>();
+                    services.AddScoped<IInfrastructureMediator, InfrastructureMediator>();
+                 
+                    services.AddSingleton<ICapabilityFactory, ServerCapabilityFactory>();
+                    services.AddSingleton<ICommandManager,     CommandManager>();
+                    services.AddSingleton<UserCounter>();
 
-                    services.AddScoped<IUnitOfWork, UnitOfWork>();
-
-                    services.AddSingleton<IServerDataMapper, ServerDataMapper>();
-                    
-                    services.AddSingleton<ICommandManager, CommandManager>();
-
-                    services.AddScoped<IServerDataMapper, ServerDataMapper>();
-
-                    services.AddScoped<IServerFactory, ServerFactory>();
-
+                    if (context.HostingEnvironment.IsDevelopment())
+                    {
+                        using var scope = services.BuildServiceProvider().CreateScope();
+                        var db = scope.ServiceProvider.GetRequiredService<InfraSimContext>();
+                        db.Database.EnsureDeleted();  
+                        db.Database.EnsureCreated();  
+                    }
                 });
+                
     }
 }

@@ -1,8 +1,10 @@
+using InfraSim.Pages.Models.Visitor;
+
 namespace InfraSim.Pages.Models.Visitor
 {
-    public sealed class CostCalculator : IServerVisitor
+    public class CostCalculator : IServerVisitor
     {
-        public int TotalCost { get; private set; }
+        public int TotalCost { get; private set; } = 0;
 
         public void Visit(IServer server)
         {

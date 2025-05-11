@@ -8,6 +8,7 @@ namespace InfraSim.Pages.Models
 {
     public class ServerFactory : IServerFactory
     {
+        public IServer CreateServer() => CreateServer(ServerType.Server);
         private readonly ICapabilityFactory _capabilityFactory;
         private readonly IServerDataMapper? _mapper;   // may be null!
 
@@ -18,11 +19,6 @@ namespace InfraSim.Pages.Models
             _capabilityFactory = capabilityFactory;
             _mapper            = mapper;
         }
-
-        public ServerFactory(ICapabilityFactory capabilityFactory)
-            : this(capabilityFactory, null!) { }
-
-        /* ---------- single servers ---------- */
 
         public IServer CreateServer(ServerType type) =>
             new ServerBuilder()

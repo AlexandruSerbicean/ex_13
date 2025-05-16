@@ -6,14 +6,10 @@ namespace InfraSim.Pages.Models
 {
     public class Server : BaseServer, IServer
     {
-        public Guid Id { get; set; } 
-
-        public Server(Guid id, ServerType type, IServerCapability capability, IServerState state)
-            : base(type, capability)
-        {
-            Id = id;
-            State = state;
-        }
-
+    public Server(ServerType type, IServerCapability capability, IValidatorStrategy validator)
+        : base(type, capability, validator)
+    {
+        State = new NormalState(); 
     }
+}
 }

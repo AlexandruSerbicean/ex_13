@@ -5,13 +5,14 @@ using InfraSim.Pages.Models.State;
 
 namespace InfraSim.Pages.Models
 {
-    public interface IServer : IServerStateHandler, IServerAcceptVisit 
+    public interface IServer : IServerStateHandler, IServerAcceptVisit
     {
         Guid Id { get; set; }
         ServerType ServerType { get; }
         IServerCapability Capability { get; }
         int RequestsCount { get; set; }
         void HandleRequests(int requests);
+        IValidatorStrategy Validator { get; set; }
 
     }
 }

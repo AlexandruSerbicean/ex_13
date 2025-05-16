@@ -2,6 +2,7 @@ using System;
 using InfraSim.Pages.Models;
 using InfraSim.Pages.Models.Capabilities;
 using InfraSim.Pages.Models.State;
+using InfraSim.Pages.Models.Validator;
 
 public class ServerBuilder : IServerBuilder
 {
@@ -9,6 +10,7 @@ public class ServerBuilder : IServerBuilder
     private ServerType _type = ServerType.Server;
     private IServerCapability _capability = new ServerCapability();
     private IServerState _state = new NormalState();
+    private IValidatorStrategy _validator = new ServerValidator(); 
 
     public IServerBuilder WithId(Guid id)
     {
@@ -34,8 +36,14 @@ public class ServerBuilder : IServerBuilder
         return this;
     }
 
+    public IServerBuilder WithValidator(IValidatorStrategy validator)
+    {
+        _validator = validator;
+        return this;
+    }
+
     public IServer Build()
     {
-        return new Server(_id, _type, _capability, _state);
+        return new Server(_id, _type, _capability, _state, _validator); 
     }
 }

@@ -14,6 +14,7 @@ namespace InfraSim.Pages.Models
         public ServerType ServerType { get; private set; }
         public IServerCapability Capability { get; private set; }
         public void Accept(IServerVisitor visitor) => visitor.Visit(this);
+        public IValidatorStrategy Validator { get; set; }
 
         public int RequestsCount
         {
@@ -32,10 +33,11 @@ namespace InfraSim.Pages.Models
             RequestsCount = requests;
         }
 
-        public BaseServer(ServerType type, IServerCapability capability)
+        public BaseServer(ServerType type, IServerCapability capability, IValidatorStrategy validator)
         {
             ServerType = type;
             Capability = capability;
+            Validator   = validator;
         }
     }
 }

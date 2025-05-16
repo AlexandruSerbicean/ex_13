@@ -3,6 +3,7 @@ using InfraSim.Pages.Models;
 using InfraSim.Pages.Models.Capabilities;
 using InfraSim.Pages.Models.Health;
 using InfraSim.Pages.Models.State;
+using InfraSim.Pages.Models.Validator;
 
 namespace InfraSim.Tests
 {
@@ -10,7 +11,10 @@ namespace InfraSim.Tests
     {
         private class TestServer : BaseServer
         {
-            public TestServer(IServerCapability capability) : base(ServerType.Server, capability) { }
+            public TestServer(ServerType type, IServerCapability capability, IValidatorStrategy validator)
+                : base(type, capability, validator)
+            {
+            }
         }
 
         [Theory]
@@ -20,9 +24,10 @@ namespace InfraSim.Tests
         [InlineData(1500, typeof(FailedState))]
         public void StateTransition_ShouldUpdateCorrectly(int requestCount, Type expectedState)
         {
-            var server = new TestServer(new ServerCapability());
+            var server = new TestServer(ServerType.Server, new ServerCapability(), new ServerValidator());
 
-            var allStates = new IServerState[] {
+            var allStates = new IServerState[]
+            {
                 new IdleState(),
                 new NormalState(),
                 new OverloadedState(),
@@ -44,7 +49,7 @@ namespace InfraSim.Tests
         [InlineData(1000, false, false, false, true)] // 100%
         public void HealthCheck_ShouldDetectCorrectState(int requestCount, bool isIdle, bool isNormal, bool isOverloaded, bool isFailed)
         {
-            var server = new TestServer(new ServerCapability());
+            var server = new TestServer(ServerType.Server, new ServerCapability(), new ServerValidator());
             server.HandleRequests(requestCount);
 
             var healthCheck = new ServerHealthCheck(server);

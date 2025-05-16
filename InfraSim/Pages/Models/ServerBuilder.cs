@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using InfraSim.Pages.Models;
 using InfraSim.Pages.Models.Capabilities;
@@ -10,7 +11,7 @@ public class ServerBuilder : IServerBuilder
     private ServerType _type = ServerType.Server;
     private IServerCapability _capability = new ServerCapability();
     private IServerState _state = new NormalState();
-    private IValidatorStrategy _validator = new ServerValidator(); 
+    private IValidatorStrategy _validator = new ServerValidator();
 
     public IServerBuilder WithId(Guid id)
     {
@@ -44,6 +45,6 @@ public class ServerBuilder : IServerBuilder
 
     public IServer Build()
     {
-        return new Server(_id, _type, _capability, _state, _validator); 
+        return new Server(_id, _type, _capability, _state, _validator);
     }
 }

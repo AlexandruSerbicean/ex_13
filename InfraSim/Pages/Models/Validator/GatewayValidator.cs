@@ -1,3 +1,5 @@
+using System.Linq;
+using InfraSim.Pages.Models;
 public class GatewayValidator : IValidatorStrategy
 {
     public bool Validate(IServer server)

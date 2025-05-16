@@ -9,6 +9,7 @@ namespace InfraSim.Services
         public int Counter { get; private set; } = 0;
 
         private bool _isRunning = false;
+        private bool _canceled = false; 
 
         public event Action? OnCounterChanged;
 
@@ -23,19 +24,24 @@ namespace InfraSim.Services
             if (_isRunning) return;
 
             _isRunning = true;
+            _canceled = false; 
             Counter = 0;
             OnCounterChanged?.Invoke();
 
             while (Counter < 200_000)
             {
+                if (_canceled) break; 
+
                 Counter += 1_000;
                 OnCounterChanged?.Invoke();
-                await Task.Delay(40); // smooth
+                await Task.Delay(40);
             }
 
-            Counter = 200_000;
+            Counter = Math.Min(Counter, 200_000);
             OnCounterChanged?.Invoke();
             _isRunning = false;
         }
+
+        public void Cancel() => _canceled = true; 
     }
 }

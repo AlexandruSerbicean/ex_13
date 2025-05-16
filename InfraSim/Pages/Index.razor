@@ -38,7 +38,14 @@
     }
 
     private void CounterChanged()
-        => InvokeAsync(StateHasChanged);  
+    {
+        if (!InfrastructureMediator.IsOK)
+        {
+            Counter.Cancel();
+        }
+    InvokeAsync(StateHasChanged);
+    }
+
 
     public void Dispose()
         => Counter.OnCounterChanged -= CounterChanged;
@@ -55,12 +62,12 @@
 
     private void RefreshUI()
     {
-    Servers = new List<IServer>();
+        Servers = new List<IServer>();
         IServerIterator it = InfrastructureMediator.CreateServerIterator();
 
         while (it.HasNext)
             Servers.Add(it.Next());
 
-            Servers.Sort((a, b) => a.ServerType.CompareTo(b.ServerType));
+        Servers.Sort((a, b) => a.ServerType.CompareTo(b.ServerType));
     }
 }

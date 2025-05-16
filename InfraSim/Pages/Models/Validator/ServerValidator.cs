@@ -1,9 +1,14 @@
+using System.Linq;
+using InfraSim.Pages.Models;
 using InfraSim.Pages.Models.State;
 
-public class ServerValidator : IValidatorStrategy
+namespace InfraSim.Pages.Models.Validator
 {
-    public bool Validate(IServer server)
+    public class ServerValidator : IValidatorStrategy
     {
-        return server.State is not FailedState;
+        public bool Validate(IServer server)
+        {
+            return server.State is not FailedState;
+        }
     }
 }

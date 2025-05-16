@@ -9,16 +9,18 @@ namespace InfraSim.Pages.Models
     {
         public ICluster Gateway { get; private set; }
         public ICluster Processors { get; private set; }
+
         private readonly IServerDataMapper Mapper;
         private readonly ICommandManager CommandManager;
-        public InfrastructureMediator(IServerFactory serverFactory,IServerDataMapper  mapper,ICommandManager commandManager)
+
+        public InfrastructureMediator(IServerFactory serverFactory, IServerDataMapper mapper, ICommandManager commandManager)
         {
-            Mapper         = mapper;
+            Mapper = mapper;
             CommandManager = commandManager;
 
-            Gateway    = serverFactory.CreateGatewayCluster();
+            Gateway = serverFactory.CreateGatewayCluster();
             Processors = serverFactory.CreateProcessorsCluster();
-            Gateway.AddServer(Processors);          
+            Gateway.AddServer(Processors);
         }
 
         public void AddServer(IServer server)
@@ -40,6 +42,7 @@ namespace InfraSim.Pages.Models
                     break;
             }
         }
+
         public IServerIterator CreateServerIterator()
         {
             return new ServerIterator(Gateway);
@@ -49,14 +52,30 @@ namespace InfraSim.Pages.Models
         {
             get
             {
-                IServerIterator iterator   = CreateServerIterator();
-                var costCalculator         = new CostCalculator();
+                IServerIterator iterator = CreateServerIterator();
+                var costCalculator = new CostCalculator();
 
                 while (iterator.HasNext)
-                iterator.Next().Accept(costCalculator);
+                    iterator.Next().Accept(costCalculator);
 
                 return costCalculator.TotalCost;
             }
         }
+
+        
+        public bool IsOK
+        {
+            get
+            {
+                var iterator = CreateServerIterator();
+                var statusCalculator = new StatusCalculator();
+
+                while (iterator.HasNext)
+                iterator.Next().Accept(statusCalculator);
+
+                return statusCalculator.IsOK;
+        }
+    }
+
     }
 }

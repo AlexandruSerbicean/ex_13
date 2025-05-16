@@ -9,6 +9,7 @@ namespace InfraSim.Pages.Models
         ICluster Gateway { get; }
         ICluster Processors { get; }
         IServerIterator CreateServerIterator();
+        bool IsOK { get; }
         int TotalCost { get; }   
     }
 }

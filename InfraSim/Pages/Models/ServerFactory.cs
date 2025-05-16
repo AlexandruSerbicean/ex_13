@@ -1,7 +1,7 @@
 using InfraSim.Pages.Models.Capabilities;
 using InfraSim.Pages.Models.Database;
 using InfraSim.Pages.Models.State;
-using InfraSim.Pages.Models.Validator; 
+using InfraSim.Pages.Models.Validator;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -27,7 +27,7 @@ namespace InfraSim.Pages.Models
                 .WithType(type)
                 .WithCapability(_capabilityFactory.Create(type))
                 .WithState(new NormalState())
-                .WithValidator(new ServerValidator()) 
+                .WithValidator(new ServerValidator())
                 .Build();
 
         public IServer CreateCache()        => CreateServer(ServerType.Cache);
@@ -35,6 +35,10 @@ namespace InfraSim.Pages.Models
         public IServer CreateLoadBalancer() => CreateServer(ServerType.LoadBalancer);
 
         /* ---------- empty cluster ---------- */
+        public ICluster CreateCluster()
+        {
+            return CreateCluster(new ServerValidator());
+        }
 
         public ICluster CreateCluster(IValidatorStrategy validator) =>
             new Cluster(_capabilityFactory.Create(ServerType.Cluster), validator);

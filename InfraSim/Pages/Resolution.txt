@@ -1,0 +1,2 @@
+Max user count reached: 89000
+Final total cost: 1343000

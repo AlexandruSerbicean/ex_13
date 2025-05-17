@@ -5,7 +5,7 @@
 @using InfraSim.Pages.Models.Iterator    
 @using InfraSim.Services
 @inject IInfrastructureMediator InfrastructureMediator
-@inject UserCounter            Counter
+@inject UserCounter Counter
 
 <PageTitle>Home</PageTitle>
 
@@ -33,6 +33,7 @@
 
     protected override void OnInitialized()
     {
+        Counter.RegisterObserver(InfrastructureMediator);
         Counter.OnCounterChanged += CounterChanged;
         RefreshUI();
     }
@@ -43,13 +44,16 @@
         {
             Counter.Cancel();
         }
-    InvokeAsync(StateHasChanged);
+
+        InvokeAsync(StateHasChanged);
     }
 
-
     public void Dispose()
-        => Counter.OnCounterChanged -= CounterChanged;
+    {
+        Counter.OnCounterChanged -= CounterChanged;
 
+        Counter.RemoveObserver(InfrastructureMediator);
+    }
 
     private async Task StartIncrementing()
         => await Counter.StartIncrementing();

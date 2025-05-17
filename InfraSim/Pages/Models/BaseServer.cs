@@ -7,7 +7,7 @@ namespace InfraSim.Pages.Models
 {
     public abstract class BaseServer : IServer
     {
-        private int Requests = 0;
+        private long Requests = 0;
 
         public Guid Id { get; set; } 
 
@@ -16,7 +16,7 @@ namespace InfraSim.Pages.Models
         public void Accept(IServerVisitor visitor) => visitor.Visit(this);
         public IValidatorStrategy Validator { get; set; }
 
-        public int RequestsCount
+        public long RequestsCount
         {
             get => Requests;
             set
@@ -28,7 +28,7 @@ namespace InfraSim.Pages.Models
 
         public IServerState State { get; set; }
 
-        public virtual void HandleRequests(int requests)
+        public virtual void HandleRequests(long requests)
         {
             RequestsCount = requests;
         }

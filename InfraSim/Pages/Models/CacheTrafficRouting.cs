@@ -7,7 +7,7 @@ namespace InfraSim.Pages.Models
     {
         public CacheTrafficRouting(List<IServer> servers) : base(servers) { }
 
-        public override int CalculateRequests(int requestsCount)
+        public override long CalculateRequests(long requestsCount)
         {
             return (int)(requestsCount * 0.8);
         }

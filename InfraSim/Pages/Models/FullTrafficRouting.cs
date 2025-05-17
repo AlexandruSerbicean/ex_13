@@ -5,16 +5,16 @@ namespace InfraSim.Pages.Models
 {
     public class FullTrafficRouting : TrafficRouting
     {
-        public readonly ServerType _serverType;
+        private readonly ServerType _serverType;
 
         public FullTrafficRouting(List<IServer> servers, ServerType serverType) : base(servers)
         {
             _serverType = serverType;
         }
 
-        public override int CalculateRequests(int requestsCount)
+        public override long CalculateRequests(long requestCount)
         {
-            return requestsCount;
+            return requestCount;
         }
 
         public override List<IServer> ObtainServers()

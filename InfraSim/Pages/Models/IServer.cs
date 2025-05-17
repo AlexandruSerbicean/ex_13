@@ -10,8 +10,8 @@ namespace InfraSim.Pages.Models
         Guid Id { get; set; }
         ServerType ServerType { get; }
         IServerCapability Capability { get; }
-        int RequestsCount { get; set; }
-        void HandleRequests(int requests);
+        long RequestsCount { get; set; }
+        void HandleRequests(long requests);
         IValidatorStrategy Validator { get; set; }
 
     }

@@ -20,7 +20,9 @@ namespace InfraSim.Pages.Models.Capabilities
                                      new TrafficDistributionDecorator(
                                          new TemporaryStorageDecorator(
                                              new ServerCapability()))),
-                                              ServerType.Cluster => new ServerCapability(),
+                ServerType.Cluster => new ServerCapability(),
+                
+                ServerType.Database     => new PersistentStorage(),
 
                 _ => throw new ArgumentOutOfRangeException(nameof(type), $"Server type '{type}' is not supported.")
             };

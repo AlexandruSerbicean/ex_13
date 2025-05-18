@@ -6,6 +6,7 @@ namespace InfraSim.Pages.Models
         LoadBalancer,
         Cache,
         Server,
+        Database,
         Cluster
     }
 }

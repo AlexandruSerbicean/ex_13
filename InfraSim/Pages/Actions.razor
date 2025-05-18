@@ -38,6 +38,11 @@
     </button>
 </div>
 
+<button class="round-button grey-button"
+        @onclick="() => AddPressed.InvokeAsync(ServerFactory.CreateServer(ServerType.Database))">
+    Add DB
+</button>
+
 <!-- ────── Undo / Redo ────── -->
 <div class="div-container">
     <button class="round-button grey-button"

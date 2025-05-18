@@ -19,6 +19,7 @@ namespace InfraSim.Pages.Models.UI
             ServerType.Cache        => "Cache",
             ServerType.LoadBalancer => "Load Balancer",
             ServerType.CDN          => "CDN",
+            ServerType.Database     => "Database",
             _ => throw new NotImplementedException($"Unknown server type {Server.ServerType}")
         };
 
@@ -28,6 +29,7 @@ namespace InfraSim.Pages.Models.UI
             ServerType.Cache        => $"{ImgBase}Cache.webp",
             ServerType.LoadBalancer => $"{ImgBase}LB.png",
             ServerType.CDN          => $"{ImgBase}CDN.png",
+            ServerType.Database     => $"{ImgBase}database.svg",
             _ => throw new NotImplementedException($"No icon mapped for {Server.ServerType}")
         };
 

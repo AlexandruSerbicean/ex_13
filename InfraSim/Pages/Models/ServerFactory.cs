@@ -30,8 +30,8 @@ namespace InfraSim.Pages.Models
                 .WithValidator(new ServerValidator())
                 .Build();
 
-        public IServer CreateCache()        => CreateServer(ServerType.Cache);
-        public IServer CreateCDN()          => CreateServer(ServerType.CDN);
+        public IServer CreateCache() => CreateServer(ServerType.Cache);
+        public IServer CreateCDN() => CreateServer(ServerType.CDN);
         public IServer CreateLoadBalancer() => CreateServer(ServerType.LoadBalancer);
 
         /* ---------- empty cluster ---------- */
@@ -65,5 +65,19 @@ namespace InfraSim.Pages.Models
 
         private IEnumerable<IServer> GetAllSafe() =>
             _mapper?.GetAll() ?? Enumerable.Empty<IServer>();
+        
+        public ICluster CreateDataCluster()
+        {
+            var cluster = new Cluster(_capabilityFactory.Create(ServerType.Cluster), new DataValidator());
+
+            if (_mapper == null)
+                return cluster; 
+
+            var dbServers = _mapper.GetAll().Where(s => s.ServerType == ServerType.Database);
+            foreach (var server in dbServers)
+                cluster.AddServer(server);
+
+            return cluster;
+        }
     }
 }

@@ -1,2 +1,2 @@
-Max user count reached: 89000
-Final total cost: 1343000
+Maximum supported users: 200000
+Final total infrastructure cost: €1351000
